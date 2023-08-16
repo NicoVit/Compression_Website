@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="HomePageStyle.css">
+  <title>JicoRollie Huffman Encoder</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--may need to change jquery version-->
+  <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+  <script src="HomePageScript.js"></script>
+  <script>
+    function adjustPositions() {
+      var title = document.querySelector('.title');
+      var subtitle = document.querySelector('.subtitle');
+      var instructions = document.querySelector('.instructions');
+      var run = document.querySelector('.run');
+      var windowHeight = window.innerHeight;
+      var windowWidth = window.innerWidth;
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      var titleTop = windowHeight * 0.7;
+      var subtitleTop = windowHeight * 0.86;
+      var subtitleVisible = subtitleTop > scrollTop && subtitleTop < (scrollTop + windowHeight);
+      if (subtitleVisible) {
+        title.classList.add('show');
+        subtitle.classList.add('show');
+        instructions.classList.add('hide');
+        run.classList.add('hide');
+      } else {
+        title.classList.remove('show');
+        subtitle.classList.remove('show');
+        title.classList.add('here');
+        subtitle.classList.add('here');
+      }
+      title.style.top = titleTop + 'px';
+      subtitle.style.top = subtitleTop + 'px';
+      instructions.style.top = '140%';
+      instructions.style.right = '5%';
+      run.style.top = '156%';
+      run.style.right = '5%';
+      if ((!subtitleVisible && scrollTop > (windowHeight * 0.86))) {
+        instructions.classList.add('show');
+        run.classList.add('show');
+        instructions.classList.remove('hide');
+        run.classList.remove('hide');
+        instructions.classList.add('here');
+        run.classList.add('here');
+      } else {
+        instructions.classList.remove('show');
+        run.classList.remove('show');
+      }
+    }
+    window.addEventListener('load', adjustPositions);
+    window.addEventListener('resize', adjustPositions);
+    window.addEventListener('scroll', adjustPositions);
+  </script>
+  <script>
+    function printFileContents() {
+      var fileInput = document.getElementById('fileInput');
+      var file = fileInput.files[0];
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var contents = e.target.result;
+        alert(contents);
+        document.getElementById('fileContents').innerText = contents; // Display the contents on the page
+      };
+      reader.readAsText(file);
+    }
+  </script>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <ul>
+        <li><a href="#">JICO ROLLIE</a></li>
+      </ul>
+    </div>
+    <ul> 
+      <img src="Ellipse 1.png" alt="Mlogo" class="Mlogo">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Projects</a></li>
+    </ul>
+  </div>
+  <div class="title">
+      Huffman Text Compression:
+  </div> 
+  <div class="subtitle">
+    Huffman compression is a widely-used technique for reducing the size of data files. It works by assigning shorter codes to frequently occurring symbols and longer codes to less common symbols. This efficient encoding allows for effective compression and decompression of data while maintaining its integrity. Huffman compression finds applications in file compression formats, multimedia codecs, and network protocols, enabling efficient storage and transmission of digital information.
+  </div>
+  <div class="instructions">
+    How to Run:
+  </div>
+  <div class="run">
+    To run, simply input a file into the 'insert file button.' Then you can either choose to compress or decompress your file. Pressing the 'compress' button will download your huffman encoded file. To decode the file, simply insert the encoded file, press the 'decompress' button, and wait for it to decode it back to english.
+  </div>
+  
+  <!--Output is located at the following places lol
+  encode output -- backend/output_encode.txt
+  decode output -- backend/output_decode.txt
+-->
+
+  <!-- input button -->
+  <div class="drop-area" id="dropArea">
+    <form class="inputForm">
+      <button class="insert_file_button" onclick="document.getElementById('fileInput').click()">insert file here</button>
+      <button onclick="printFileContents()">Print File Contents</button>
+      <button class="huffman_btn" name="upload_encode" onclick="onEncodePressed()">compress</button>
+      <button class="huffman_btn" name="upload_decode" onclick="onDecodePressed()">decompress</button>
+      <input type="file" id="fileInput" style="display: none;">
+    </form>
+    <section id="banner">
+      <h1> </h1>
+    </section>
+  </div>
+  <nav>
+
+</body>
+
+</html>
